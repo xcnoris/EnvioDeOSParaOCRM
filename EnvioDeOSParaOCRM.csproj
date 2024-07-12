@@ -60,11 +60,14 @@
     <Compile Include="Metodos\BuscarOrdemDeServiçoInDB.cs" />
     <Compile Include="Metodos\EnviarOrdemServiçoForCRM.cs" />
     <Compile Include="Metodos\InserirOportunidade.cs" />
+    <Compile Include="Metodos\VerificarOSinTableRelacao.cs" />
+    <Compile Include="Modelos\AtualizarAcaoRequest.cs" />
     <Compile Include="Modelos\Contato.cs" />
     <Compile Include="Modelos\Followup.cs" />
     <Compile Include="Modelos\Lead.cs" />
     <Compile Include="Modelos\OportunidadeResponse.cs" />
     <Compile Include="Modelos\OrdemServiçoRequest.cs" />
+    <Compile Include="Modelos\RelacaoOScomCRM.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="Frm_Principal.resx">

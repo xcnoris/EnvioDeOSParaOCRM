@@ -1,47 +1,46 @@
-﻿using System;
+﻿using System.Data;
 using System.Data.SqlClient;
 
 namespace EnvioDeOSParaOCRM.DataBase
 {
-    internal class ConexaoDB
+    public class ConexaoDB
     {
-        private readonly string _connectionString;
+        private SqlConnection _connection;
 
-        public ConexaoDB()
+        public ConexaoDB(int dbNumber)
         {
-            _connectionString = "Server=192.168.0.254;Database=LojamixNovo;User Id=Lojamix;Password=l0j4m1x;";
+            // caso o id do banco seja 1, busca no banco Lojamix
+            if (dbNumber == 1)
+            {
+                string conexao = "Server=192.168.0.254;Database=LojamixNovo;User Id=Lojamix;Password=l0j4m1x;";
+                _connection = new SqlConnection(conexao);
+            }
+            // caso o id do banco seja 2, busca no banco RelacaoOSComCRM
+            if (dbNumber == 2)
+            {
+                string conexao = "Server=192.168.0.254;Database=RelacaoOScomCRM;User Id=RelOSComCRM;Password=C@sa2005;";
+                _connection = new SqlConnection(conexao);
+            }
         }
 
         public SqlConnection GetConnection()
         {
-            try
+            return _connection;
+        }
+
+        public void OpenConnection()
+        {
+            if (_connection.State == ConnectionState.Closed)
             {
-                SqlConnection connection = new SqlConnection(_connectionString);
-                connection.Open();
-                Console.WriteLine("Connection opened successfully.");
-                return connection;
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine($"Error opening connection: {ex.Message}");
-                throw;
+                _connection.Open();
             }
         }
 
-        public void CloseConnection(SqlConnection connection)
+        public void CloseConnection()
         {
-            try
+            if (_connection.State == ConnectionState.Open)
             {
-                if (connection != null && connection.State == System.Data.ConnectionState.Open)
-                {
-                    connection.Close();
-                    Console.WriteLine("Connection closed successfully.");
-                }
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine($"Error closing connection: {ex.Message}");
-                throw;
+                _connection.Close();
             }
         }
     }
