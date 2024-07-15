@@ -58,8 +58,9 @@ namespace EnvioDeOSParaOCRM.Metodos
                     string id_Categoria = row["id_categoria_ordem_servico"].ToString();
                     string nomecliente = row["nome_cliente"].ToString();
                     string idosenome = id_ordemServico + nomecliente;
+                    string codigoJornada = "C8DA5BD4D7";
 
-                    // Verifica se a OS já esta na tabela de relação, caso ela esteja significa que já existe um cady/oportunidade criada no CRM
+                    // Verifica se a OS já esta na tabela de relação, caso ela este, significa que já existe um cady/oportunidade criada no CRM
                     VerificarOSinTableRelacao ServicoinTableRelacao = new VerificarOSinTableRelacao();
                     DataTable Tb = ServicoinTableRelacao.BuscaOSInDBRelacao(id_ordemServico);
 
@@ -114,6 +115,29 @@ namespace EnvioDeOSParaOCRM.Metodos
                         OportunidadeResponse response = await EnviarOrdemServiçoForCRM.EnviarOportunidade(oportunidade, token);
                         ServicoinTableRelacao.InserirRelacaoInTable(Convert.ToInt32(id_ordemServico), response.CodigoOportunidade.ToString(), Convert.ToInt32(id_Categoria));
 
+                        // Verifica se a Ordem de Serviço esta entrando com aguardando avaliação, caso nao esteja altera no CRM
+                        if (!(Convert.ToInt32(id_Categoria) == 1))
+                        {
+                            string cod_oportunidade = response.CodigoOportunidade.ToString();
+
+                            string codAcao = SelecionarCodAcao(id_Categoria);
+
+                            AtualizarAcaoRequest AtualizarAcao = new AtualizarAcaoRequest
+                            {
+                                codigoOportunidade = cod_oportunidade,
+                                codigoAcao = codAcao,
+                                codigoJornada = codigoJornada,
+                                textoFollowup = "Acao atualiada a parti da serviço de atualizacao por meio da api"
+                            };
+
+                            // Atualize a categoria na tabela de relação se necessário
+
+                            EnviarOrdemServiçoForCRM.AtualizarAcao(AtualizarAcao, token);
+
+                            // Log para verificação
+                            Console.WriteLine($"Categoria atualizada para {id_Categoria} na tabela de relação para a OS {id_ordemServico}.");
+                        }
+
                         // Caso der certo a criação entra no if
                         if (ServicoinTableRelacao.Status)
                         {
@@ -155,7 +179,7 @@ namespace EnvioDeOSParaOCRM.Metodos
 
                         string cod_oportunidade = Tb.Rows[0]["cod_oportunidade"].ToString();
                         string categoriaExistente = Tb.Rows[0]["id_categoria_ordem_servico"].ToString();
-                        string codigoJornada = "C8DA5BD4D7";
+             
 
                         if (id_Categoria != categoriaExistente)
                         {
@@ -163,23 +187,27 @@ namespace EnvioDeOSParaOCRM.Metodos
 
                             Console.WriteLine($"A categoria da ordem de serviço {id_ordemServico} mudou de {categoriaExistente} para {id_Categoria}.");
 
-                            string codAcao = SelecionarCodAcao(id_Categoria);
-
-                            AtualizarAcaoRequest AtualizarAcao = new AtualizarAcaoRequest
+                            ServicoinTableRelacao.AlterarCategoriaInTableRelacao(Convert.ToInt32(id_ordemServico), Convert.ToInt32(id_Categoria));
+                            if (ServicoinTableRelacao.Status)
                             {
-                                codigoOportunidade = cod_oportunidade,
-                                codigoAcao = codAcao,
-                                codigoJornada = codigoJornada,
-                                textoFollowup = "Acao atualiada a parti da serviço de atualizacao por meio da api"
-                            };
 
-                            // Atualize a categoria na tabela de relação se necessário
-                            
-                            EnviarOrdemServiçoForCRM.AtualizarAcao(AtualizarAcao, token);
-                            //ServicoinTableRelacao.AtualizarCategoria(id_ordemServico, id_Categoria);
+                                string codAcao = SelecionarCodAcao(id_Categoria);
 
-                            // Log para verificação
-                            Console.WriteLine($"Categoria atualizada para {id_Categoria} na tabela de relação para a OS {id_ordemServico}.");
+                                AtualizarAcaoRequest AtualizarAcao = new AtualizarAcaoRequest
+                                {
+                                    codigoOportunidade = cod_oportunidade,
+                                    codigoAcao = codAcao,
+                                    codigoJornada = codigoJornada,
+                                    textoFollowup = "Acao atualiada a parti da serviço de atualizacao por meio da api"
+                                };
+
+                                // Atualize a categoria na tabela de relação se necessário
+
+                                EnviarOrdemServiçoForCRM.AtualizarAcao(AtualizarAcao, token);
+
+                                // Log para verificação
+                                Console.WriteLine($"Categoria atualizada para {id_Categoria} na tabela de relação para a OS {id_ordemServico}.");
+                            }
                         }
                         else
                         {

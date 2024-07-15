@@ -45,11 +45,21 @@ namespace EnvioDeOSParaOCRM.Metodos
                 Status = true;
                 return TB;
             }
-            catch(Exception ex) 
+            catch(SqlException ex) 
             {
                 Message = $"[ERROR]: {ex.Message} - {_comandosDB.Mensagem}";
                 Status = false;
                 throw ex;
+            }
+            catch (Exception ex)
+            {
+                Message = $"[ERROR]: {ex.Message} - {_comandosDB.Mensagem}";
+                Status = false;
+                throw ex;
+            }
+            finally
+            {
+                _conexaoDBRelOSCRM.CloseConnection();
             }
 
         }
@@ -72,7 +82,7 @@ namespace EnvioDeOSParaOCRM.Metodos
 
                     _conexaoDBRelOSCRM.OpenConnection();
                     cmd.ExecuteNonQuery();
-                    _conexaoDBRelOSCRM.CloseConnection();
+                
 
                     Message = "Ordem de serviço inserida com sucesso!";
                     Status = true;
@@ -83,8 +93,63 @@ namespace EnvioDeOSParaOCRM.Metodos
                 Message = "Erro ao inserir ordem de serviço no banco de dados: " + ex.Message;
                 Status = false;
             }
+            catch (Exception ex)
+            {
+                Message = "Erro ao inserir ordem de serviço no banco de dados: " + ex.Message;
+                Status = false;
+            }
+            finally
+            {
+                _conexaoDBRelOSCRM.CloseConnection();
+            }
         }
 
+        internal void AlterarCategoriaInTableRelacao(int idOrdemServico, int idCategoria)
+        {
+            try
+            {
+                string query = @"UPDATE Relacao_OrdemServico_CRM
+                                 SET
+                                    id_categoria_ordem_servico = @idCategoria
+                                 WHERE 
+                                    id_ordemservico = @idOrdemServico;
+                                    ";
 
+
+                using (SqlCommand cmd = new SqlCommand(query, _conexaoDBRelOSCRM.GetConnection()))
+                {
+                    cmd.Parameters.AddWithValue("@idCategoria", idCategoria);
+                    cmd.Parameters.AddWithValue("@idOrdemServico", idOrdemServico);
+
+                    _conexaoDBRelOSCRM.OpenConnection();
+                    int rowsAffected = cmd.ExecuteNonQuery();
+
+                    if (rowsAffected > 0)
+                    {
+                        Message = "Categoria da ordem de serviço atualizada com sucesso!";
+                        Status = true;
+                    }
+                    else
+                    {
+                        Message = "Nenhuma ordem de serviço encontrada com o ID fornecido.";
+                        Status = false;
+                    }
+                }
+            }
+            catch (SqlException ex)
+            {
+                Message = "Erro ao inserir ordem de serviço no banco de dados: " + ex.Message;
+                Status = false;
+            }
+            catch (Exception ex)
+            {
+                Message = "Erro ao inserir ordem de serviço no banco de dados: " + ex.Message;
+                Status = false;
+            }
+            finally
+            {
+                _conexaoDBRelOSCRM.CloseConnection();
+            }
+        }
     }
 }
