@@ -1,4 +1,5 @@
 ﻿using EnvioDeOSParaOCRM.DataBase;
+using EnvioDeOSParaOCRM.Formularios;
 using EnvioDeOSParaOCRM.Modelos;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
@@ -27,10 +28,9 @@ namespace EnvioDeOSParaOCRM.Metodos
         private ComandosDB _comandosDBRelOSCR;
         private BuscarOrdemDeServicoInDB BuscarOS;
 
-
         public InserirOportunidade()
         {
-
+            
             _conexaoDBLojamix = new ConexaoDB(1);
             _conexaoDBRelOSCRM = new ConexaoDB(2);
 
@@ -40,7 +40,6 @@ namespace EnvioDeOSParaOCRM.Metodos
             BuscarOS = new BuscarOrdemDeServicoInDB();
 
         }
-
 
 
 
@@ -63,6 +62,7 @@ namespace EnvioDeOSParaOCRM.Metodos
                     // Verifica se a OS já esta na tabela de relação, caso ela este, significa que já existe um cady/oportunidade criada no CRM
                     VerificarOSinTableRelacao ServicoinTableRelacao = new VerificarOSinTableRelacao();
                     DataTable Tb = ServicoinTableRelacao.BuscaOSInDBRelacao(id_ordemServico);
+
 
                     Console.WriteLine(ServicoinTableRelacao.Message);
 

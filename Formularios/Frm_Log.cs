@@ -12,6 +12,7 @@ namespace EnvioDeOSParaOCRM.Formularios
 {
     public partial class Frm_Log : UserControl
     {
+
         public Frm_Log()
         {
             InitializeComponent();

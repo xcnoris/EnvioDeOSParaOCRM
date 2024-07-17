@@ -44,10 +44,10 @@
             // 
             // TBC_Dados
             // 
-            this.TBC_Dados.Location = new System.Drawing.Point(3, 12);
+            this.TBC_Dados.Location = new System.Drawing.Point(3, 1);
             this.TBC_Dados.Name = "TBC_Dados";
             this.TBC_Dados.SelectedIndex = 0;
-            this.TBC_Dados.Size = new System.Drawing.Size(829, 421);
+            this.TBC_Dados.Size = new System.Drawing.Size(829, 432);
             this.TBC_Dados.TabIndex = 1;
             // 
             // Btn_Salvar
@@ -58,6 +58,7 @@
             this.Btn_Salvar.TabIndex = 2;
             this.Btn_Salvar.Text = "Salvar";
             this.Btn_Salvar.UseVisualStyleBackColor = true;
+            this.Btn_Salvar.Click += new System.EventHandler(this.Btn_Salvar_Click);
             // 
             // Btn_Fechar
             // 
@@ -67,6 +68,7 @@
             this.Btn_Fechar.TabIndex = 3;
             this.Btn_Fechar.Text = "Fechar";
             this.Btn_Fechar.UseVisualStyleBackColor = true;
+            this.Btn_Fechar.Click += new System.EventHandler(this.Btn_Fechar_Click);
             // 
             // FrmTelaPrincipal
             // 

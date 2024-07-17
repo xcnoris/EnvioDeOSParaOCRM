@@ -12,6 +12,26 @@ namespace EnvioDeOSParaOCRM.Formularios
 {
     public partial class Frm_ConexaoDB_UC : UserControl
     {
+        public string Servidor
+        {
+            get { return Txt_Servidor.Text; }
+        }
+        public string IpHost
+        {
+            get { return Txt_IpHost.Text; }
+        }
+        public string DataBase
+        {
+            get { return Txt_DataBase.Text; }
+        }
+        public string Usuario
+        {
+            get { return Txt_Usuario.Text; }
+        }
+        public string Senha
+        {
+            get { return Txt_Senha.Text; }
+        }
         public Frm_ConexaoDB_UC()
         {
             InitializeComponent();

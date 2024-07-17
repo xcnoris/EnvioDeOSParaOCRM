@@ -69,6 +69,7 @@
     <Compile Include="FrmTelaPrincipal.Designer.cs">
       <DependentUpon>FrmTelaPrincipal.cs</DependentUpon>
     </Compile>
+    <Compile Include="MetodosGerais.cs" />
     <Compile Include="Metodos\BuscarOrdemDeServiçoInDB.cs" />
     <Compile Include="Metodos\EnviarOrdemServiçoForCRM.cs" />
     <Compile Include="Metodos\InserirOportunidade.cs" />
@@ -99,6 +100,7 @@
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
     </Compile>
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
@@ -114,6 +116,8 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <None Include="Resources\6c71dc9fa72049dd83b01c3ac0e05e45.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
