@@ -51,11 +51,23 @@
   <ItemGroup>
     <Compile Include="DataBase\ComandosDB.cs" />
     <Compile Include="DataBase\ConexaoDB.cs" />
-    <Compile Include="Frm_Principal.cs">
+    <Compile Include="Formularios\Frm_ConexaoDB_UC.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Formularios\Frm_ConexaoDB_UC.Designer.cs">
+      <DependentUpon>Frm_ConexaoDB_UC.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Formularios\Frm_Log.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Formularios\Frm_Log.Designer.cs">
+      <DependentUpon>Frm_Log.cs</DependentUpon>
+    </Compile>
+    <Compile Include="FrmTelaPrincipal.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Frm_Principal.Designer.cs">
-      <DependentUpon>Frm_Principal.cs</DependentUpon>
+    <Compile Include="FrmTelaPrincipal.Designer.cs">
+      <DependentUpon>FrmTelaPrincipal.cs</DependentUpon>
     </Compile>
     <Compile Include="Metodos\BuscarOrdemDeServiçoInDB.cs" />
     <Compile Include="Metodos\EnviarOrdemServiçoForCRM.cs" />
@@ -70,8 +82,14 @@
     <Compile Include="Modelos\RelacaoOScomCRM.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <EmbeddedResource Include="Frm_Principal.resx">
-      <DependentUpon>Frm_Principal.cs</DependentUpon>
+    <EmbeddedResource Include="Formularios\Frm_ConexaoDB_UC.resx">
+      <DependentUpon>Frm_ConexaoDB_UC.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Formularios\Frm_Log.resx">
+      <DependentUpon>Frm_Log.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FrmTelaPrincipal.resx">
+      <DependentUpon>FrmTelaPrincipal.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>

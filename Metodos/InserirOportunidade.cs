@@ -232,10 +232,10 @@ namespace EnvioDeOSParaOCRM.Metodos
             switch (idCategoria)
             {
                 case "1":  // AGUARDANDO ANALISE
-                    return "99EA5272D06B15DABEC1";
+                    return "610728D401E283FA07FB";
 
                 case "2":   // EM ANALISE
-                    return "E7ABA5B92D61765665C8"; 
+                    return "488A0F6E2D44B5516917"; 
 
                 case "3":    // COTAÇÃO DE PEÇAS
                     return "99EA5272D06B15DABEC1";

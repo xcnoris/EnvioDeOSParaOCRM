@@ -17,7 +17,7 @@ namespace EnvioDeOSParaOCRM
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new Frm_Principal());
+            Application.Run(new FrmTelaPrincipal());
         }
     }
 }
