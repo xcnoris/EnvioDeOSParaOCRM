@@ -1,7 +1,9 @@
 ﻿using Newtonsoft.Json;
+using System;
 using System.Data;
 using System.Data.SqlClient;
 using System.IO;
+using System.Windows.Forms;
 
 namespace EnvioDeOSParaOCRM.DataBase
 {
@@ -23,27 +25,19 @@ namespace EnvioDeOSParaOCRM.DataBase
 
         public ConexaoDB(int dbNumber)
         {
+            CarregarbancoLojamix();
             // caso o id do banco seja 1, busca no banco Lojamix
             if (dbNumber == 1)
             {
-                string conexao = "Server=192.168.0.254;Database=LojamixNovo;User Id=Lojamix;Password=l0j4m1x;";
+                string conexao = $"Server={IpHost};Database={DataBase};User Id={Usuario};Password={Senha};";
                 _connection = new SqlConnection(conexao);
             }
             // caso o id do banco seja 2, busca no banco RelacaoOSComCRM
             if (dbNumber == 2)
             {
-                string conexao = "Server=192.168.0.254;Database=RelacaoOScomCRM;User Id=RelOSComCRM;Password=C@sa2005;";
+                string conexao = "Server=localhost;Database=RelacaoOScomCRM;User Id=RelOSComCRM;Password=C@sa2005;";
                 _connection = new SqlConnection(conexao);
             }
-        }
-
-        public static ConexaoDB DesSerializedClassUnit(string vJson)
-        {
-            return JsonConvert.DeserializeObject<ConexaoDB>(vJson);
-        }
-        public static string SerializedClassUnit(ConexaoDB conexao)
-        {
-            return JsonConvert.SerializeObject(conexao);
         }
 
         public SqlConnection GetConnection()
@@ -73,18 +67,38 @@ namespace EnvioDeOSParaOCRM.DataBase
             var jsonData = JsonConvert.SerializeObject(this);
             File.WriteAllText(filePath, jsonData);
         }
-
         public static ConexaoDB LoadConnectionData(string filePath)
         {
             if (!File.Exists(filePath))
             {
-                throw new FileNotFoundException("O arquivo de configuração não foi encontrado.");
+                return null;
             }
 
             var jsonData = File.ReadAllText(filePath);
             return JsonConvert.DeserializeObject<ConexaoDB>(jsonData);
         }
 
+        private void CarregarbancoLojamix()
+        {
+            try
+            {
+                string basePath = AppDomain.CurrentDomain.BaseDirectory;
+                string filePath = Path.Combine(basePath, "conexao.json");
 
+                ConexaoDB conexao = ConexaoDB.LoadConnectionData(filePath);
+                if (conexao != null)
+                {
+                    Servidor = conexao.Servidor;
+                    IpHost = conexao.IpHost;
+                    DataBase = conexao.DataBase;
+                    Usuario = conexao.Usuario;
+                    Senha = conexao.Senha;
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Erro ao carregar dados de conexão: " + ex.Message);
+            }
+        }
     }
 }

@@ -30,13 +30,13 @@ namespace EnvioDeOSParaOCRM
 
             FrmcoenxaoUC = new Frm_ConexaoDB_UC();
             FrmLog = new Frm_Log();
-            InserirOpn = new InserirOportunidade();
+            InserirOpn = new InserirOportunidade(FrmLog);
 
             AdicionarUserControls();
 
             // Timer para executar a função periodicamente
             Timer timer = new Timer();
-            timer.Interval = 10000; // 10 segundos
+            timer.Interval = 300000; // 5 min
             timer.Tick += async (s, e) =>
             {
                 try
@@ -46,7 +46,7 @@ namespace EnvioDeOSParaOCRM
                 catch (Exception ex)
                 {
                     // Log de erro
-                    Console.WriteLine($"[ERROR]: {ex.Message}");
+                    MetodosGerais.RegistrarLog($"[ERROR]: {ex.Message}");
                 }
             };
             timer.Start();
@@ -80,17 +80,10 @@ namespace EnvioDeOSParaOCRM
             };
             TB1.Controls.Add(FrmcoenxaoUC);
 
-            // Crie a segunda aba "Logs"
-            TabPage TB2 = new TabPage
-            {
-                Name = "Logs",
-                Text = "Logs"
-            };
-            TB2.Controls.Add(FrmLog);
+          
 
             // Adicione as abas ao TabControl
             TBC_Dados.TabPages.Add(TB1);
-            TBC_Dados.TabPages.Add(TB2);
         }
 
         private void Btn_Fechar_Click(object sender, EventArgs e)
@@ -128,7 +121,7 @@ namespace EnvioDeOSParaOCRM
             }
             catch(Exception ex)
             {
-
+                MessageBox.Show($"Error: {ex.Message}");
             }
             //SalvarArquivo();
         }
@@ -144,19 +137,6 @@ namespace EnvioDeOSParaOCRM
                 Usuario = FrmcoenxaoUC.Usuario,
                 Senha = FrmcoenxaoUC.Senha
             };
-        }
-
-        private void SalvarArquivo()
-        {
-            ConexaoDB conexao = new ConexaoDB();
-            conexao.Servidor = "192.168.0.254";
-            conexao.IpHost = "192.168.0.254";
-            conexao.DataBase = "LojamixNovo";
-            conexao.Usuario = "Lojamix";
-            conexao.Senha = "l0j4m1x";
-
-            conexao.SaveConnectionData("caminho_para_o_arquivo.json");
-
         }
     }
 }

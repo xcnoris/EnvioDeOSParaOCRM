@@ -28,9 +28,10 @@ namespace EnvioDeOSParaOCRM.Metodos
         private ComandosDB _comandosDBRelOSCR;
         private BuscarOrdemDeServicoInDB BuscarOS;
 
-        public InserirOportunidade()
+        private Frm_Log frm_log;
+        public InserirOportunidade(Frm_Log frmLog)
         {
-            
+            frm_log = frmLog;
             _conexaoDBLojamix = new ConexaoDB(1);
             _conexaoDBRelOSCRM = new ConexaoDB(2);
 
@@ -56,7 +57,7 @@ namespace EnvioDeOSParaOCRM.Metodos
                     string id_ordemServico = row["id_ordem_servico"].ToString();
                     string id_Categoria = row["id_categoria_ordem_servico"].ToString();
                     string nomecliente = row["nome_cliente"].ToString();
-                    string idosenome = id_ordemServico + nomecliente;
+                    string idosenome = $"{id_ordemServico} - {nomecliente}";
                     string codigoJornada = "C8DA5BD4D7";
 
                     // Verifica se a OS já esta na tabela de relação, caso ela este, significa que já existe um cady/oportunidade criada no CRM
@@ -64,30 +65,27 @@ namespace EnvioDeOSParaOCRM.Metodos
                     DataTable Tb = ServicoinTableRelacao.BuscaOSInDBRelacao(id_ordemServico);
 
 
-                    Console.WriteLine(ServicoinTableRelacao.Message);
-
                     // Log para verificação
-                    Console.WriteLine($"Verificando OS {id_ordemServico}...\n");
+                    MetodosGerais.RegistrarLog($"Verificando OS {id_ordemServico}...");
 
-                    // Caso o id da OS nao esteja na tabela de relação, entra no if
                     if (Tb.Rows.Count == 0)
                     {
                         // Log para verificação
-                        Console.WriteLine($"OS {id_ordemServico} não encontrada na tabela de relação.\n");
+                        MetodosGerais.RegistrarLog($"OS {id_ordemServico} não encontrada na tabela de relação.");
 
                         // Instancia a classe para a Ordem de Serviço que não foi encontrada na tabela Relacao_OrdemServico_CRM
                         OrdemServiçoRequest oportunidade = new OrdemServiçoRequest
                         {
                             codigoApi = "4B29E80B1A",
                             codigoOportunidade = "",
-                            origemOportunidade = "Lojamix",
+                            origemOportunidade = "Lojamix - Consumo API",
                             lead = new Lead
                             {
                                 nomeLead = idosenome,
                                 telefoneLead = row["telefone"].ToString(),
                                 emailLead = row["email_cliente"].ToString(),
                                 cnpjLead = "",
-                                origemLead = "Teste api",
+                                origemLead = "Serviço de consumo de API",
                                 contatos = new List<Contato>
                         {
                             new Contato
@@ -106,8 +104,8 @@ namespace EnvioDeOSParaOCRM.Metodos
                             },
                             followups = new List<Followup>
                     {
-                        new Followup { textoFollowup = "Teste - Essa oportunidade foi criada a partir da API de integração da LeadFinder" },
-                        new Followup { textoFollowup = "Teste - É possível inserir followups com os históricos da oportunidade via API" }
+                        new Followup { textoFollowup = "Essa oportunidade foi criada a partir da API de integração da LeadFinder" },
+                        new Followup { textoFollowup = "É possível inserir followups com os históricos da oportunidade via API" }
                     }
                         };
 
@@ -121,13 +119,13 @@ namespace EnvioDeOSParaOCRM.Metodos
                             string cod_oportunidade = response.CodigoOportunidade.ToString();
 
                             string codAcao = SelecionarCodAcao(id_Categoria);
-
+                            string textoFolloup = SelecionarMensagemAtualizacao(id_Categoria);
                             AtualizarAcaoRequest AtualizarAcao = new AtualizarAcaoRequest
                             {
                                 codigoOportunidade = cod_oportunidade,
                                 codigoAcao = codAcao,
                                 codigoJornada = codigoJornada,
-                                textoFollowup = "Acao atualiada a parti da serviço de atualizacao por meio da api"
+                                textoFollowup = textoFolloup
                             };
 
                             // Atualize a categoria na tabela de relação se necessário
@@ -135,7 +133,8 @@ namespace EnvioDeOSParaOCRM.Metodos
                             EnviarOrdemServiçoForCRM.AtualizarAcao(AtualizarAcao, token);
 
                             // Log para verificação
-                            Console.WriteLine($"Categoria atualizada para {id_Categoria} na tabela de relação para a OS {id_ordemServico}.");
+                            MetodosGerais.RegistrarLog($"Categoria atualizada para {id_Categoria} na tabela de relação para a OS {id_ordemServico}.");
+                         
                         }
 
                         // Caso der certo a criação entra no if
@@ -145,31 +144,30 @@ namespace EnvioDeOSParaOCRM.Metodos
                             {
                                 if (ServicoinTableRelacao.Status)
                                 {
-                                    Console.WriteLine($"\nOportunidade criada com código: {ServicoinTableRelacao.Message} - {id_ordemServico}");
-                                    Console.WriteLine($"Oportunidade criada com código: {response.CodigoOportunidade} - {id_ordemServico}\n");
+                                    MetodosGerais.RegistrarLog($"Oportunidade criada com código: {ServicoinTableRelacao.Message} - {id_ordemServico}");
 
-                                    Console.WriteLine(ServicoinTableRelacao.Message);
+                                    MetodosGerais.RegistrarLog(ServicoinTableRelacao.Message);
                                     Message = ServicoinTableRelacao.Message;
                                     Status = true;
                                 }
                                 else
                                 {
-                                    Console.WriteLine($"[ERROR]: {ServicoinTableRelacao.Message}");
+                                    MetodosGerais.RegistrarLog($"[ERROR]: {ServicoinTableRelacao.Message}");
                                     Message = $"[ERROR]: {ServicoinTableRelacao.Message}";
                                     Status = false;
                                 }
                             }
                             catch (Exception ex)
                             {
-                                Console.WriteLine($"[ERROR]: {ex.Message}");
-                                Message = $"[ERROR]: {ex.Message}  \n";
+                                MetodosGerais.RegistrarLog($"[ERROR]: {ex.Message}");
+                                Message = $"[ERROR]: {ex.Message}";
                                 Status = false;
                             }
 
                         }
                         else
                         {
-                            Console.WriteLine("Erro ao criar a oportunidade.");
+                            MetodosGerais.RegistrarLog("Erro ao criar a oportunidade.");
                         }
                     }
                     else
@@ -185,20 +183,21 @@ namespace EnvioDeOSParaOCRM.Metodos
                         {
 
 
-                            Console.WriteLine($"A categoria da ordem de serviço {id_ordemServico} mudou de {categoriaExistente} para {id_Categoria}.");
+                            MetodosGerais.RegistrarLog($"A categoria da ordem de serviço {id_ordemServico} mudou de {categoriaExistente} para {id_Categoria}.");
 
                             ServicoinTableRelacao.AlterarCategoriaInTableRelacao(Convert.ToInt32(id_ordemServico), Convert.ToInt32(id_Categoria));
                             if (ServicoinTableRelacao.Status)
                             {
 
                                 string codAcao = SelecionarCodAcao(id_Categoria);
+                                string textoFolloup = SelecionarMensagemAtualizacao(id_Categoria);
 
                                 AtualizarAcaoRequest AtualizarAcao = new AtualizarAcaoRequest
                                 {
                                     codigoOportunidade = cod_oportunidade,
                                     codigoAcao = codAcao,
                                     codigoJornada = codigoJornada,
-                                    textoFollowup = "Acao atualiada a parti da serviço de atualizacao por meio da api"
+                                    textoFollowup = textoFolloup
                                 };
 
                                 // Atualize a categoria na tabela de relação se necessário
@@ -206,22 +205,19 @@ namespace EnvioDeOSParaOCRM.Metodos
                                 EnviarOrdemServiçoForCRM.AtualizarAcao(AtualizarAcao, token);
 
                                 // Log para verificação
-                                Console.WriteLine($"Categoria atualizada para {id_Categoria} na tabela de relação para a OS {id_ordemServico}.");
+                                MetodosGerais.RegistrarLog($"Categoria atualizada para {id_Categoria} na tabela de relação para a OS {id_ordemServico}.");
                             }
                         }
                         else
                         {
-                            Console.WriteLine($"Ordem de serviço {id_ordemServico} já existe na tabela com a mesma categoria.");
+                            MetodosGerais.RegistrarLog($"Ordem de serviço {id_ordemServico} já existe na tabela com a mesma categoria.");
                         }
-
-                        Console.WriteLine($"Ordem de serviço {id_ordemServico} já existe na tabela com a mesma categoria.");
                     }
-
                 }
             }
             catch (Exception ex)
             {
-                Console.WriteLine($"[ERROR]: {ex.Message}");
+                MetodosGerais.RegistrarLog($"[ERROR]: {ex.Message}");
                 Message = $"[ERROR]: {ex.Message}";
                 Status = false;
             }
@@ -235,7 +231,7 @@ namespace EnvioDeOSParaOCRM.Metodos
                     return "610728D401E283FA07FB";
 
                 case "2":   // EM ANALISE
-                    return "488A0F6E2D44B5516917"; 
+                    return "488A0F6E2D44B5516917";
 
                 case "3":    // COTAÇÃO DE PEÇAS
                     return "99EA5272D06B15DABEC1";
@@ -256,31 +252,89 @@ namespace EnvioDeOSParaOCRM.Metodos
                     return "DA62CFF0FB010DE83E78";
 
                 case "10":  // APROVADO PARA DESCARTE
-                    return "88F9B12D58D6950B3C72"; 
+                    return "88F9B12D58D6950B3C72";
 
                 case "11": // SEM CONSERTO
-                    return "75B00E055610E6122A8F"; 
+                    return "75B00E055610E6122A8F";
 
                 case "12":// EM SERVIÇO EXTERNO
-                    return "88F9B12D58D6950B3C72"; 
+                    return "88F9B12D58D6950B3C72";
 
                 case "13": //BUSCAR SERVIÇO EXTERNO
-                    return "88F9B12D58D6950B3C72"; 
+                    return "88F9B12D58D6950B3C72";
 
                 case "14": // ENCERRADA
-                    return "88F9B12D58D6950B3C72"; 
+                    return "88F9B12D58D6950B3C72";
 
                 case "15":  // PRONTA
                     return "B76F652A3AFE943D944E";
 
                 case "16": // DESCARTADA PELO CLIENTE
-                    return "88F9B12D58D6950B3C72"; 
+                    return "88F9B12D58D6950B3C72";
 
                 case "17": // ENVIADO PARA DESCARTE
-                    return "88F9B12D58D6950B3C72"; 
+                    return "88F9B12D58D6950B3C72";
 
                 default:
-                    Console.WriteLine("Número inválido. Por favor, escolha um número de 1 a 5.");
+                    MetodosGerais.RegistrarLog("Número inválido. Por favor, escolha um número de 1 a 5.");
+                    return null;
+            }
+        }
+
+        internal string SelecionarMensagemAtualizacao(string idCategoria)
+        {
+            switch (idCategoria)
+            {
+                case "1":  // AGUARDANDO ANALISE
+                    return "OS ENTROU NA ETAPA AGUARDANDO ANALISE";
+
+                case "2":   // EM ANALISE
+                    return "OS ENTROU NA ETAPA EM ANALISE";
+
+                case "3":    // COTAÇÃO DE PEÇAS
+                    return "OS ENTROU NA ETAPA COTAÇÃO DE PEÇAS";
+
+                case "4":   // AGUARDANDO APROVAÇÃO DO CLIENTE
+                    return "OS ENTROU NA ETAPA AGUARDANDO APROVAÇÃO DO CLIENTE";
+
+                case "5": // APROVADO PELO CLIENTE
+                    return "OS ENTROU NA ETAPA APROVADO PELO CLIENTE";
+
+                case "6":  //REJEITADO PELO  CLIENTE
+                    return "OS ENTROU NA ETAPA REJEITADO PELO  CLIENTE";
+
+                case "7":  // AGUARDANDO PEÇAS
+                    return "OS ENTROU NA ETAPA AGUARDANDO PEÇAS";
+
+                case "8": //AGUARDANDO SUBSTITUIÇÃO DE PEÇA
+                    return "OS ENTROU NA ETAPA AGUARDANDO SUBSTITUIÇÃO DE PEÇA";
+
+                case "10":  // APROVADO PARA DESCARTE
+                    return "OS ENTROU NA ETAPA APROVADA PARA DESCARTE";
+
+                case "11": // SEM CONSERTO
+                    return "OS ENTROU NA ETAPA SEM CONSERTO";
+
+                case "12":// EM SERVIÇO EXTERNO
+                    return "OS ENTROU NA ETAPA EM SERVIÇO EXTERNO";
+
+                case "13": //BUSCAR SERVIÇO EXTERNO
+                    return "OS ENTROU NA ETAPA BUSCAR SERVIÇO EXTERNO";
+
+                case "14": // ENCERRADA
+                    return "OS ENTROU NA ETAPA ENCERRADA";
+
+                case "15":  // PRONTA
+                    return "OS ENTROU NA ETAPA PRONTA";
+
+                case "16": // DESCARTADA PELO CLIENTE
+                    return "OS ENTROU NA ETAPA DESCARTADA PELO CLIENTE";
+
+                case "17": // ENVIADO PARA DESCARTE
+                    return "OS ENTROU NA ETAPA ENVIADO PARA DESCARTE";
+
+                default:
+                    MetodosGerais.RegistrarLog("Número inválido. Por favor, escolha um número de 1 a 5.");
                     return null;
             }
         }

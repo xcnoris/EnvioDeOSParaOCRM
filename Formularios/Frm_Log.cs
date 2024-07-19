@@ -12,10 +12,18 @@ namespace EnvioDeOSParaOCRM.Formularios
 {
     public partial class Frm_Log : UserControl
     {
-
+        //public string TextoBoxLog 
+        //{
+        //    get
+        //}
         public Frm_Log()
         {
             InitializeComponent();
+        }
+
+        internal void AdiconarMenssageLog(string mensagem)
+        {
+            Txt_Logs.Text += $"{mensagem}\n";
         }
     }
 }

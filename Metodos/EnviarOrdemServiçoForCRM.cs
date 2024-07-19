@@ -33,26 +33,26 @@ namespace EnvioDeOSParaOCRM.Metodos
                         OportunidadeResponse resposta = JsonConvert.DeserializeObject<OportunidadeResponse>(responseBody);
                         if (resposta != null)
                         {
-                            Console.WriteLine("Resposta OK:");
-                            Console.WriteLine(responseBody);
+                            MetodosGerais.RegistrarLog("Resposta OK:");
+                            MetodosGerais.RegistrarLog(responseBody);
                             return resposta;
                         }
                         else
                         {
-                            Console.WriteLine("Erro na resposta: resposta desserializada é nula.");
+                            MetodosGerais.RegistrarLog("Erro na resposta: resposta desserializada é nula.");
                         }
                     }
                     else
                     {
-                        Console.WriteLine("Erro na resposta da API:");
-                        Console.WriteLine($"Status Code: {response.StatusCode}");
-                        Console.WriteLine(responseBody);
+                        MetodosGerais.RegistrarLog("Erro na resposta da API:");
+                        MetodosGerais.RegistrarLog($"Status Code: {response.StatusCode}");
+                        MetodosGerais.RegistrarLog(responseBody);
                     }
                 }
                 catch (Exception ex)
                 {
-                    Console.WriteLine("Exceção durante a chamada da API:");
-                    Console.WriteLine(ex.Message);
+                    MetodosGerais.RegistrarLog("Exceção durante a chamada da API:");
+                    MetodosGerais.RegistrarLog(ex.Message);
                 }
 
                 return null;
@@ -80,26 +80,26 @@ namespace EnvioDeOSParaOCRM.Metodos
                         OportunidadeResponse resposta = JsonConvert.DeserializeObject<OportunidadeResponse>(responseBody);
                         if (resposta != null)
                         {
-                            Console.WriteLine("Resposta OK:");
-                            Console.WriteLine(responseBody);
+                            MetodosGerais.RegistrarLog("Resposta OK:");
+                            MetodosGerais.RegistrarLog(responseBody);
                             return resposta;
                         }
                         else
                         {
-                            Console.WriteLine("Erro na resposta: resposta desserializada é nula.");
+                            MetodosGerais.RegistrarLog("Erro na resposta: resposta desserializada é nula.");
                         }
                     }
                     else
                     {
-                        Console.WriteLine("Erro na resposta da API:");
-                        Console.WriteLine($"Status Code: {response.StatusCode}");
-                        Console.WriteLine(responseBody);
+                        MetodosGerais.RegistrarLog("Erro na resposta da API:");
+                        MetodosGerais.RegistrarLog($"Status Code: {response.StatusCode}");
+                        MetodosGerais.RegistrarLog(responseBody);
                     }
                 }
                 catch (Exception ex)
                 {
-                    Console.WriteLine("Exceção durante a chamada da API:");
-                    Console.WriteLine(ex.Message);
+                    MetodosGerais.RegistrarLog("Exceção durante a chamada da API:");
+                    MetodosGerais.RegistrarLog(ex.Message);
                 }
 
                 return null;

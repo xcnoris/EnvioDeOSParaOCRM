@@ -70,6 +70,7 @@
             // 
             this.Txt_Senha.Location = new System.Drawing.Point(222, 173);
             this.Txt_Senha.Name = "Txt_Senha";
+            this.Txt_Senha.PasswordChar = '*';
             this.Txt_Senha.Size = new System.Drawing.Size(176, 20);
             this.Txt_Senha.TabIndex = 21;
             // 
@@ -146,6 +147,7 @@
             this.Btn_TestarConexao.TabIndex = 12;
             this.Btn_TestarConexao.Text = "Testar Conexão";
             this.Btn_TestarConexao.UseVisualStyleBackColor = true;
+            this.Btn_TestarConexao.Click += new System.EventHandler(this.Btn_TestarConexao_Click);
             // 
             // label1
             // 
@@ -187,6 +189,7 @@
             this.Controls.Add(this.groupBox1);
             this.Name = "Frm_ConexaoDB_UC";
             this.Size = new System.Drawing.Size(829, 421);
+            this.Load += new System.EventHandler(this.Frm_ConexaoDB_UC_Load);
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
