@@ -35,7 +35,7 @@ namespace EnvioDeOSParaOCRM.DataBase
             // caso o id do banco seja 2, busca no banco RelacaoOSComCRM
             if (dbNumber == 2)
             {
-                string conexao = "Server=localhost;Database=RelacaoOScomCRM;User Id=RelOSComCRM;Password=C@sa2005;";
+                string conexao = "Server=192.168.0.254;Database=RelacaoOScomCRM;User Id=RelOSComCRM;Password=C@sa2005;";
                 _connection = new SqlConnection(conexao);
             }
         }

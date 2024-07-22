@@ -36,7 +36,7 @@ namespace EnvioDeOSParaOCRM
 
             // Timer para executar a função periodicamente
             Timer timer = new Timer();
-            timer.Interval = 300000; // 5 min
+            timer.Interval = 10000; // 5 min
             timer.Tick += async (s, e) =>
             {
                 try

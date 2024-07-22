@@ -48,6 +48,7 @@ namespace EnvioDeOSParaOCRM.Metodos
         {
             try
             {
+                MetodosGerais.RegistrarInicioLog();
                 // Busca serviços no DB
                 DataTable servicosTable = BuscarOS.BuscarOrdemDeServiçoInDB();
 
@@ -213,13 +214,18 @@ namespace EnvioDeOSParaOCRM.Metodos
                             MetodosGerais.RegistrarLog($"Ordem de serviço {id_ordemServico} já existe na tabela com a mesma categoria.");
                         }
                     }
+
+        
                 }
+                MetodosGerais.RegistrarFinalLog();
             }
             catch (Exception ex)
             {
+                MetodosGerais.RegistrarInicioLog();
                 MetodosGerais.RegistrarLog($"[ERROR]: {ex.Message}");
                 Message = $"[ERROR]: {ex.Message}";
                 Status = false;
+                MetodosGerais.RegistrarFinalLog();
             }
         }
 
@@ -250,6 +256,9 @@ namespace EnvioDeOSParaOCRM.Metodos
 
                 case "8": //AGUARDANDO SUBSTITUIÇÃO DE PEÇA
                     return "DA62CFF0FB010DE83E78";
+
+                case "9": //AGUARDANDO SUBSTITUIÇÃO DE PEÇA
+                    return "6133AF81ECA6CBB37D18";
 
                 case "10":  // APROVADO PARA DESCARTE
                     return "88F9B12D58D6950B3C72";
