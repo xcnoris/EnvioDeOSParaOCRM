@@ -48,6 +48,7 @@
             // 
             // groupBox1
             // 
+            this.groupBox1.BackColor = System.Drawing.Color.Gainsboro;
             this.groupBox1.Controls.Add(this.Txt_Senha);
             this.groupBox1.Controls.Add(this.Txt_Usuario);
             this.groupBox1.Controls.Add(this.Txt_DataBase);
@@ -59,6 +60,7 @@
             this.groupBox1.Controls.Add(this.label2);
             this.groupBox1.Controls.Add(this.Btn_TestarConexao);
             this.groupBox1.Controls.Add(this.label1);
+            this.groupBox1.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F);
             this.groupBox1.Location = new System.Drawing.Point(36, 164);
             this.groupBox1.Name = "groupBox1";
             this.groupBox1.Size = new System.Drawing.Size(760, 227);
@@ -71,70 +73,73 @@
             this.Txt_Senha.Location = new System.Drawing.Point(222, 173);
             this.Txt_Senha.Name = "Txt_Senha";
             this.Txt_Senha.PasswordChar = '*';
-            this.Txt_Senha.Size = new System.Drawing.Size(176, 20);
+            this.Txt_Senha.Size = new System.Drawing.Size(176, 22);
             this.Txt_Senha.TabIndex = 21;
             // 
             // Txt_Usuario
             // 
             this.Txt_Usuario.Location = new System.Drawing.Point(222, 138);
             this.Txt_Usuario.Name = "Txt_Usuario";
-            this.Txt_Usuario.Size = new System.Drawing.Size(176, 20);
+            this.Txt_Usuario.Size = new System.Drawing.Size(176, 22);
             this.Txt_Usuario.TabIndex = 20;
             // 
             // Txt_DataBase
             // 
             this.Txt_DataBase.Location = new System.Drawing.Point(222, 106);
             this.Txt_DataBase.Name = "Txt_DataBase";
-            this.Txt_DataBase.Size = new System.Drawing.Size(367, 20);
+            this.Txt_DataBase.Size = new System.Drawing.Size(367, 22);
             this.Txt_DataBase.TabIndex = 19;
             // 
             // Txt_IpHost
             // 
             this.Txt_IpHost.Location = new System.Drawing.Point(222, 67);
             this.Txt_IpHost.Name = "Txt_IpHost";
-            this.Txt_IpHost.Size = new System.Drawing.Size(367, 20);
+            this.Txt_IpHost.Size = new System.Drawing.Size(367, 22);
             this.Txt_IpHost.TabIndex = 18;
             // 
             // Txt_Servidor
             // 
             this.Txt_Servidor.Location = new System.Drawing.Point(222, 34);
             this.Txt_Servidor.Name = "Txt_Servidor";
-            this.Txt_Servidor.Size = new System.Drawing.Size(367, 20);
+            this.Txt_Servidor.Size = new System.Drawing.Size(367, 22);
             this.Txt_Servidor.TabIndex = 17;
             // 
             // label6
             // 
             this.label6.AutoSize = true;
-            this.label6.Location = new System.Drawing.Point(155, 176);
+            this.label6.Location = new System.Drawing.Point(141, 177);
             this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(38, 13);
+            this.label6.Size = new System.Drawing.Size(46, 16);
             this.label6.TabIndex = 16;
             this.label6.Text = "Senha";
             // 
             // label4
             // 
             this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(155, 109);
+            this.label4.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F);
+            this.label4.Location = new System.Drawing.Point(140, 109);
             this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(54, 13);
+            this.label4.Size = new System.Drawing.Size(68, 16);
             this.label4.TabIndex = 15;
             this.label4.Text = "DataBase";
             // 
             // label5
             // 
             this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(155, 141);
+            this.label5.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F);
+            this.label5.Location = new System.Drawing.Point(140, 141);
             this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(43, 13);
+            this.label5.Size = new System.Drawing.Size(54, 16);
             this.label5.TabIndex = 14;
             this.label5.Text = "Usuario";
             // 
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(155, 70);
+            this.label2.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F);
+            this.label2.Location = new System.Drawing.Point(143, 70);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(44, 13);
+            this.label2.Size = new System.Drawing.Size(51, 16);
             this.label2.TabIndex = 13;
             this.label2.Text = "IP/Host";
             // 
@@ -152,9 +157,10 @@
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(155, 37);
+            this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label1.Location = new System.Drawing.Point(143, 37);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(46, 13);
+            this.label1.Size = new System.Drawing.Size(58, 16);
             this.label1.TabIndex = 11;
             this.label1.Text = "Servidor";
             // 
@@ -163,8 +169,8 @@
             this.label3.AutoSize = true;
             this.label3.BackColor = System.Drawing.Color.White;
             this.label3.Font = new System.Drawing.Font("Microsoft Sans Serif", 18F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label3.ForeColor = System.Drawing.Color.DarkGreen;
-            this.label3.Location = new System.Drawing.Point(253, 16);
+            this.label3.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(43)))), ((int)(((byte)(118)))), ((int)(((byte)(217)))));
+            this.label3.Location = new System.Drawing.Point(189, 88);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(457, 29);
             this.label3.TabIndex = 12;
@@ -172,10 +178,11 @@
             // 
             // pictureBox1
             // 
+            this.pictureBox1.BackColor = System.Drawing.Color.White;
             this.pictureBox1.Image = global::EnvioDeOSParaOCRM.Properties.Resources._6c71dc9fa72049dd83b01c3ac0e05e45;
-            this.pictureBox1.Location = new System.Drawing.Point(36, 16);
+            this.pictureBox1.Location = new System.Drawing.Point(36, 14);
             this.pictureBox1.Name = "pictureBox1";
-            this.pictureBox1.Size = new System.Drawing.Size(165, 132);
+            this.pictureBox1.Size = new System.Drawing.Size(760, 56);
             this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
             this.pictureBox1.TabIndex = 13;
             this.pictureBox1.TabStop = false;
@@ -184,6 +191,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(43)))), ((int)(((byte)(167)))), ((int)(((byte)(217)))));
             this.Controls.Add(this.pictureBox1);
             this.Controls.Add(this.label3);
             this.Controls.Add(this.groupBox1);

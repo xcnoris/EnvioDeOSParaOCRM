@@ -1,6 +1,7 @@
 ﻿using EnvioDeOSParaOCRM.DataBase;
 using EnvioDeOSParaOCRM.Formularios;
 using EnvioDeOSParaOCRM.Metodos;
+using EnvioDeOSParaOCRM.Modelos;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -20,6 +21,7 @@ namespace EnvioDeOSParaOCRM
         private const string Token = "F65F9082EE9DB13A464B5DC0A9F2B8D56840CA3A1178826B0DF17DA2CE7DD621";
 
         private Frm_ConexaoDB_UC FrmcoenxaoUC;
+        private Frm_DadosParaApiUC FrmDadosApiUC;
         private Frm_Log FrmLog;
         
 
@@ -29,6 +31,7 @@ namespace EnvioDeOSParaOCRM
 
 
             FrmcoenxaoUC = new Frm_ConexaoDB_UC();
+            FrmDadosApiUC = new Frm_DadosParaApiUC();
             FrmLog = new Frm_Log();
             InserirOpn = new InserirOportunidade(FrmLog);
 
@@ -36,7 +39,7 @@ namespace EnvioDeOSParaOCRM
 
             // Timer para executar a função periodicamente
             Timer timer = new Timer();
-            timer.Interval = 10000; // 5 min
+            timer.Interval = 300000; // 5 min
             timer.Tick += async (s, e) =>
             {
                 try
@@ -80,10 +83,18 @@ namespace EnvioDeOSParaOCRM
             };
             TB1.Controls.Add(FrmcoenxaoUC);
 
-          
+            TabPage TB2 = new TabPage
+            {
+                Name = "API",
+                Text = "API"
+            };
+            TB2.Controls.Add(FrmDadosApiUC);
+
+
 
             // Adicione as abas ao TabControl
             TBC_Dados.TabPages.Add(TB1);
+            TBC_Dados.TabPages.Add(TB2);
         }
 
         private void Btn_Fechar_Click(object sender, EventArgs e)
@@ -112,7 +123,8 @@ namespace EnvioDeOSParaOCRM
         {
             try
             {
-                ConexaoDB conexao = LeituraFormulario();
+                ConexaoDB conexao = LeituraFormularioConexao();
+                DadosParaAPI dadosAPI = LeituraFrmDadosAPI();
 
                 string basePath = AppDomain.CurrentDomain.BaseDirectory;
                 string filePath = Path.Combine(basePath, "conexao.json");
@@ -126,7 +138,7 @@ namespace EnvioDeOSParaOCRM
             //SalvarArquivo();
         }
 
-        private ConexaoDB LeituraFormulario()
+        private ConexaoDB LeituraFormularioConexao()
         {
             return new ConexaoDB
             {
@@ -136,6 +148,13 @@ namespace EnvioDeOSParaOCRM
                 DataBase = FrmcoenxaoUC.DataBase,
                 Usuario = FrmcoenxaoUC.Usuario,
                 Senha = FrmcoenxaoUC.Senha
+            };
+        }
+        private DadosParaAPI LeituraFrmDadosAPI()
+        {
+            return new DadosParaAPI
+            {
+                Token = FrmDadosApiUC.Token,
             };
         }
     }

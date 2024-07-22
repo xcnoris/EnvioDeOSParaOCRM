@@ -72,6 +72,12 @@
     <Compile Include="Formularios\Frm_ConexaoDB_UC.Designer.cs">
       <DependentUpon>Frm_ConexaoDB_UC.cs</DependentUpon>
     </Compile>
+    <Compile Include="Formularios\Frm_DadosParaApiUC.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Formularios\Frm_DadosParaApiUC.Designer.cs">
+      <DependentUpon>Frm_DadosParaApiUC.cs</DependentUpon>
+    </Compile>
     <Compile Include="Formularios\Frm_Log.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -91,6 +97,7 @@
     <Compile Include="Metodos\VerificarOSinTableRelacao.cs" />
     <Compile Include="Modelos\AtualizarAcaoRequest.cs" />
     <Compile Include="Modelos\Contato.cs" />
+    <Compile Include="Modelos\DadosParaAPI.cs" />
     <Compile Include="Modelos\Followup.cs" />
     <Compile Include="Modelos\Lead.cs" />
     <Compile Include="Modelos\OportunidadeResponse.cs" />
@@ -100,6 +107,9 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="Formularios\Frm_ConexaoDB_UC.resx">
       <DependentUpon>Frm_ConexaoDB_UC.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Formularios\Frm_DadosParaApiUC.resx">
+      <DependentUpon>Frm_DadosParaApiUC.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Formularios\Frm_Log.resx">
       <DependentUpon>Frm_Log.cs</DependentUpon>

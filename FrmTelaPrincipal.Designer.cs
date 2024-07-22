@@ -34,6 +34,7 @@
             this.TBC_Dados = new System.Windows.Forms.TabControl();
             this.Btn_Salvar = new System.Windows.Forms.Button();
             this.Btn_Fechar = new System.Windows.Forms.Button();
+            this.label1 = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // notifyIcon1
@@ -70,11 +71,22 @@
             this.Btn_Fechar.UseVisualStyleBackColor = true;
             this.Btn_Fechar.Click += new System.EventHandler(this.Btn_Fechar_Click);
             // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(728, 462);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(94, 13);
+            this.label1.TabIndex = 4;
+            this.label1.Text = "Versão: 1.24.7.2.2";
+            // 
             // FrmTelaPrincipal
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.BackColor = System.Drawing.Color.WhiteSmoke;
             this.ClientSize = new System.Drawing.Size(834, 487);
+            this.Controls.Add(this.label1);
             this.Controls.Add(this.Btn_Fechar);
             this.Controls.Add(this.Btn_Salvar);
             this.Controls.Add(this.TBC_Dados);
@@ -87,6 +99,7 @@
             this.Text = "FrmTelaPrincipal";
             this.SizeChanged += new System.EventHandler(this.FrmTelaPrincipal_SizeChanged);
             this.ResumeLayout(false);
+            this.PerformLayout();
 
         }
 
@@ -96,5 +109,6 @@
         private System.Windows.Forms.TabControl TBC_Dados;
         private System.Windows.Forms.Button Btn_Salvar;
         private System.Windows.Forms.Button Btn_Fechar;
+        private System.Windows.Forms.Label label1;
     }
 }

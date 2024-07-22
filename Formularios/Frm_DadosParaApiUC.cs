@@ -10,13 +10,18 @@ using System.Windows.Forms;
 
 namespace EnvioDeOSParaOCRM.Formularios
 {
-    public partial class Frm_Log : UserControl
+    public partial class Frm_DadosParaApiUC : UserControl
     {
-        //public string TextoBoxLog 
-        //{
-        //    get
-        //}
-        public Frm_Log()
+        internal string Token
+        {
+            get
+            {
+                return Txt_Token.Text;
+            } 
+        }
+
+
+        public Frm_DadosParaApiUC()
         {
             InitializeComponent();
         }

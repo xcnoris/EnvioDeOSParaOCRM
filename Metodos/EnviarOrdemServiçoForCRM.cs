@@ -33,9 +33,12 @@ namespace EnvioDeOSParaOCRM.Metodos
                         OportunidadeResponse resposta = JsonConvert.DeserializeObject<OportunidadeResponse>(responseBody);
                         if (resposta != null)
                         {
-                            MetodosGerais.RegistrarLog("Resposta OK:");
+
+                            MetodosGerais.RegistrarLog("Resposta OK - Oportunidade criada no CRM:");
                             MetodosGerais.RegistrarLog(responseBody);
+
                             return resposta;
+
                         }
                         else
                         {
@@ -80,7 +83,7 @@ namespace EnvioDeOSParaOCRM.Metodos
                         OportunidadeResponse resposta = JsonConvert.DeserializeObject<OportunidadeResponse>(responseBody);
                         if (resposta != null)
                         {
-                            MetodosGerais.RegistrarLog("Resposta OK:");
+                            MetodosGerais.RegistrarLog("Resposta OK -  Oportunidade Atualizada no CRM: ");
                             MetodosGerais.RegistrarLog(responseBody);
                             return resposta;
                         }
