@@ -85,6 +85,7 @@
             this.Controls.Add(this.label1);
             this.Name = "Frm_DadosParaApiUC";
             this.Size = new System.Drawing.Size(829, 421);
+            this.Load += new System.EventHandler(this.Frm_DadosParaApiUC_Load);
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
             this.ResumeLayout(false);

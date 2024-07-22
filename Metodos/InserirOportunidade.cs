@@ -1,17 +1,9 @@
 ﻿using EnvioDeOSParaOCRM.DataBase;
 using EnvioDeOSParaOCRM.Formularios;
 using EnvioDeOSParaOCRM.Modelos;
-using Newtonsoft.Json;
-using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
 using System.Data;
-using System.Data.SqlClient;
-using System.Drawing;
-using System.Linq;
-using System.Net.Http;
-using System.Net.Http.Headers;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace EnvioDeOSParaOCRM.Metodos
@@ -44,7 +36,7 @@ namespace EnvioDeOSParaOCRM.Metodos
 
 
 
-        public async Task VerificarNovosServicos(string token)
+        public async Task VerificarNovosServicos(Frm_DadosParaApiUC DadosAPI)
         {
             try
             {
@@ -111,7 +103,7 @@ namespace EnvioDeOSParaOCRM.Metodos
                         };
 
                         // tenta criar a oportunidade no CRM
-                        OportunidadeResponse response = await EnviarOrdemServiçoForCRM.EnviarOportunidade(oportunidade, token);
+                        OportunidadeResponse response = await EnviarOrdemServiçoForCRM.EnviarOportunidade(oportunidade, DadosAPI.Token);
                         ServicoinTableRelacao.InserirRelacaoInTable(Convert.ToInt32(id_ordemServico), response.CodigoOportunidade.ToString(), Convert.ToInt32(id_Categoria));
 
                         // Verifica se a Ordem de Serviço esta entrando com aguardando avaliação, caso nao esteja altera no CRM
@@ -131,7 +123,7 @@ namespace EnvioDeOSParaOCRM.Metodos
 
                             // Atualize a categoria na tabela de relação se necessário
 
-                            EnviarOrdemServiçoForCRM.AtualizarAcao(AtualizarAcao, token);
+                            EnviarOrdemServiçoForCRM.AtualizarAcao(AtualizarAcao, DadosAPI.Token);
 
                             // Log para verificação
                             MetodosGerais.RegistrarLog($"Categoria atualizada para {id_Categoria} na tabela de relação para a OS {id_ordemServico}.");
@@ -203,7 +195,7 @@ namespace EnvioDeOSParaOCRM.Metodos
 
                                 // Atualize a categoria na tabela de relação se necessário
 
-                                EnviarOrdemServiçoForCRM.AtualizarAcao(AtualizarAcao, token);
+                                EnviarOrdemServiçoForCRM.AtualizarAcao(AtualizarAcao, DadosAPI.Token);
 
                                 // Log para verificação
                                 MetodosGerais.RegistrarLog($"Categoria atualizada para {id_Categoria} na tabela de relação para a OS {id_ordemServico}.");

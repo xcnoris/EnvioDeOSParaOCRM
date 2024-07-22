@@ -3,14 +3,8 @@ using EnvioDeOSParaOCRM.Formularios;
 using EnvioDeOSParaOCRM.Metodos;
 using EnvioDeOSParaOCRM.Modelos;
 using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
 using System.Drawing;
 using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace EnvioDeOSParaOCRM
@@ -39,12 +33,12 @@ namespace EnvioDeOSParaOCRM
 
             // Timer para executar a função periodicamente
             Timer timer = new Timer();
-            timer.Interval = 300000; // 5 min
+            timer.Interval = 3000000; // 5 min
             timer.Tick += async (s, e) =>
             {
                 try
                 {
-                    await InserirOpn.VerificarNovosServicos(Token);
+                    await InserirOpn.VerificarNovosServicos(FrmDadosApiUC);
                 }
                 catch (Exception ex)
                 {
@@ -126,6 +120,13 @@ namespace EnvioDeOSParaOCRM
                 ConexaoDB conexao = LeituraFormularioConexao();
                 DadosParaAPI dadosAPI = LeituraFrmDadosAPI();
 
+                dadosAPI.InserirTokenInTable();
+
+                if (dadosAPI.Status)
+                {
+                    MessageBox.Show("Valores Salvos", "Envio de Ordem de Serviço", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                }
+
                 string basePath = AppDomain.CurrentDomain.BaseDirectory;
                 string filePath = Path.Combine(basePath, "conexao.json");
 
@@ -140,22 +141,58 @@ namespace EnvioDeOSParaOCRM
 
         private ConexaoDB LeituraFormularioConexao()
         {
-            return new ConexaoDB
+            try
             {
+                // Caso algum dado seja nulo ele retorna uma mensagem
+                if (string.IsNullOrEmpty(FrmcoenxaoUC.Servidor) ||
+                    string.IsNullOrEmpty(FrmcoenxaoUC.IpHost) ||
+                    string.IsNullOrEmpty(FrmcoenxaoUC.DataBase) ||
+                    string.IsNullOrEmpty(FrmcoenxaoUC.Usuario) ||
+                    string.IsNullOrEmpty(FrmcoenxaoUC.Senha))
+                {
+                    throw new ArgumentException("Todos os campos de conexão são obrigatórios.");
+                }
 
-                Servidor = FrmcoenxaoUC.Servidor,
-                IpHost = FrmcoenxaoUC.IpHost,
-                DataBase = FrmcoenxaoUC.DataBase,
-                Usuario = FrmcoenxaoUC.Usuario,
-                Senha = FrmcoenxaoUC.Senha
-            };
+                return new ConexaoDB
+                {
+                    Servidor = FrmcoenxaoUC.Servidor,
+                    IpHost = FrmcoenxaoUC.IpHost,
+                    DataBase = FrmcoenxaoUC.DataBase,
+                    Usuario = FrmcoenxaoUC.Usuario,
+                    Senha = FrmcoenxaoUC.Senha
+                };
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Erro: {ex.Message}", "Envio de OS", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MetodosGerais.RegistrarLog($"Erro: {ex.Message}");
+                throw;
+            }
         }
+
         private DadosParaAPI LeituraFrmDadosAPI()
         {
-            return new DadosParaAPI
+            try
             {
-                Token = FrmDadosApiUC.Token,
-            };
+                // Caso algum dado seja nulo ele retorna uma mensagem
+                if (string.IsNullOrEmpty(FrmDadosApiUC.Token))
+                {
+                    throw new ArgumentException("Todos os campos são obrigatórios.");
+                }
+
+                return new DadosParaAPI
+                {
+                    Token = FrmDadosApiUC.Token,
+                };
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Erro: {ex.Message}", "Envio de OS", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MetodosGerais.RegistrarLog($"Erro: {ex.Message}");
+                throw;
+            }
+           
         }
+
     }
 }
