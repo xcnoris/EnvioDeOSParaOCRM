@@ -22,6 +22,7 @@ namespace EnvioDeOSParaOCRM.Metodos
 
                 // Buscar serviços no banco de dados a partir de uma data ou parâmetro definido
                 string query = "SELECT id_ordem_servico, nome_cliente, fone_ddd_cliente + fone_numero_cliente AS telefone, email_cliente, id_categoria_ordem_servico FROM ordem_servico WHERE data_hora_cadastro >= '18/07/2024' ";
+                //string query = "SELECT id_ordem_servico, nome_cliente, fone_ddd_cliente + fone_numero_cliente AS telefone, email_cliente, id_categoria_ordem_servico FROM ordem_servico WHERE id_ordem_servico = 8673";
 
                 // Converte o resultado do select em DataTable
                 DataTable servicosTable = _comandosDB.ExecuteQuery(query);

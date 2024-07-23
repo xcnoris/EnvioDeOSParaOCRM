@@ -12,7 +12,6 @@ namespace EnvioDeOSParaOCRM
     public partial class FrmTelaPrincipal : Form
     {
         private InserirOportunidade InserirOpn;
-        private const string Token = "F65F9082EE9DB13A464B5DC0A9F2B8D56840CA3A1178826B0DF17DA2CE7DD621";
 
         private Frm_ConexaoDB_UC FrmcoenxaoUC;
         private Frm_DadosParaApiUC FrmDadosApiUC;
@@ -33,7 +32,7 @@ namespace EnvioDeOSParaOCRM
 
             // Timer para executar a função periodicamente
             Timer timer = new Timer();
-            timer.Interval = 3000000; // 5 min
+            timer.Interval = 10000; // 5 min
             timer.Tick += async (s, e) =>
             {
                 try
